@@ -6,9 +6,14 @@ from pydantic import BaseModel
 
 load_dotenv()
 
-# Define the model
-model = OpenAIModel('gpt-4o-mini', api_key=os.getenv('OPENAI_API_KEY'))
 
+# Define the model
+model = OpenAIModel(
+    base_url='https://api.deepseek.com/v1',
+    model_name='deepseek-chat',
+    api_key=os.getenv('DEEPSEEK_API_KEY')
+    )
+    
 # Define the output model
 class SystemPrompt(BaseModel):
     """System prompt for an agent to generate helpful responses"""

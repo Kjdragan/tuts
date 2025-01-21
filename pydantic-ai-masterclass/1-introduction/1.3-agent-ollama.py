@@ -3,8 +3,8 @@ from pydantic_ai.models.ollama import OllamaModel
 from colorama import Fore
 
 ollama_model = OllamaModel(
-    model_name='llama3.2:1b',
-    base_url='http://0.0.0.0:11434/v1',
+    model_name='llama3.2:latest',
+    base_url='http://localhost:11434/v1'
 )
 
 # Create the Agent

@@ -7,7 +7,10 @@ from colorama import Fore
 
 load_dotenv()
 # Create the OpenAI model
-openai_model = OpenAIModel('gpt-4o-mini', api_key=os.getenv('OPENAI_API_KEY'))
+openai_model = OpenAIModel(
+    model_name='gpt-4o-mini',
+    api_key=os.getenv('OPENAI_API_KEY')
+    )
 
 # Create the OpenAI agent
 open_ai_agent = Agent(model=openai_model)
@@ -21,8 +24,8 @@ message_history = result.new_messages()
 
 # Create the Ollama model
 ollama_model = OllamaModel(
-    model_name='llama3.2:1b',
-    base_url='http://0.0.0.0:11434/v1',
+    model_name='llama3.2:latest',
+    base_url='http://localhost:11434/v1'
 )
 
 # Create the Ollama agent

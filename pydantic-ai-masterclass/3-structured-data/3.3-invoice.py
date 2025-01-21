@@ -43,7 +43,7 @@ logfire.notice('Text prompt LLM results: {result}', result = str(result.data))
 logfire.info('Result type: {result}', result = type(result.data))
 
 # Read the markdown file
-with open('data/invoice.md', 'r') as file:
+with open(r"C:\Users\kevin\repos\tuts\pydantic-ai-masterclass\3-structured-data\data\invoice.md", 'r') as file:
     invoice_data = file.read()
 
 # Run the agent
