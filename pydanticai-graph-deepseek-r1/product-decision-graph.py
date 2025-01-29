@@ -27,10 +27,10 @@ tavily_client = TavilyClient(api_key=os.getenv('TAVILY_API_KEY'))
 # Initialize the OpenAI model
 model = OpenAIModel('gpt-4o-mini', api_key=os.getenv('OPENAI_API_KEY'))
 
-# Initialize the Deepseek R1 model on Ollama
+# Initialize the Deepseek R1 model on Ollama (using localhost for local connection)
 reasoning_model = OllamaModel(
-    model_name='deepseek-r1',
-    base_url='http://0.0.0.0:11434/v1',
+    model_name='deepseek-r1:8b',
+    base_url='http://localhost:11434/v1',
 )
 
 # Number of rounds for the debate
@@ -91,7 +91,12 @@ con_agent = Agent[None, Argument](
 )
 
 # Reasoning agent
-reasoning_agent = Agent(model=reasoning_model, system_prompt='You are a product reviewer. Review the arguments for the product and make a decision if the product is a buy or skip. Respond by including the sentiment, decision, and explanation. Include both the positive and negative arguments in the decision. Emphasise why the product is a buy or skip.' ,deps_type=Product)
+reasoning_agent = Agent[None, str](
+    model=reasoning_model,
+    result_type=str,  # Using str as result type since we'll format it later
+    deps_type=Product,
+    system_prompt='You are a product reviewer. Review the arguments for the product and make a decision if the product is a buy or skip. Respond by including the sentiment, decision, and explanation. Include both the positive and negative arguments in the decision. Emphasise why the product is a buy or skip.'
+)
 
 # Decision agent
 decision_format_agent = Agent(model=model, system_prompt='You are a formatting agent. Take the input provided and respond with a structured response.', result_type=Decision, deps_type=Product)
@@ -110,7 +115,7 @@ def product_search(ctx: RunContext[str], sentiment: str) -> str:
     """Perform search for online reviews for given product and return the results.
     Args:
         ctx: the context object
-        sentiment: whther to search for positive or negative reviews
+        sentiment: wheter to search for positive or negative reviews
     """
     max_results = 5
     query = f"Find results with {sentiment} sentiment for {ctx.deps.name} with keywords {ctx.deps.keywords}"
