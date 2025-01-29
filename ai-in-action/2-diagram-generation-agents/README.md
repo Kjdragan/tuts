@@ -1,28 +1,33 @@
-# Invoice Like a Boss! Let AI Agents Do The Boring Stuff (AI IN ACTION)
+# 🧠 Building Mermaid Diagram Agents with smolagents
 
-This project provides a Python-based pipeline for processing invoices using LangGraph agents and tools. It extracts key details from an invoice, classifies the client into tiers (Silver, Gold, Platinum), calculates profitability based on user-supplied service costs, and generates a profitability summary.
+Welcome to the second tutorial in the **AI IN ACTION** series! In this tutorial, we’ll guide you through building an AI-powered workflow for generating **Mermaid diagrams**. By the end of this guide, you’ll have an agent capable of:
 
----
-
-## 🚀 Features
-
-- **Client Tier Classification**: Automatically classifies clients based on the total invoice amount.
-- **Entity Extraction**: Extracts entities like client name, services provided, and total amount due.
-- **Profitability Analysis**: Calculates total costs, profit, and classifies whether the client is profitable.
-- **Summarization**: Generates a concise profitability summary.
+1. Generating a **Mermaid script** based on a user prompt.
+2. Converting the Mermaid script into an image.
+3. Saving and displaying the generated diagram via a web interface.
 
 ---
 
-This repository serves as a companion to the AI IN ACTION series and its first video tutorial **[Invoice Like a Boss! Let AI Agents Do The Boring Stuff (AI IN ACTION)](https://www.youtube.com/watch?v=wzcB8_xPdQs)** which introduces a LangGraph-based data processing pipleine through practical examples.
+## **🚀 What You’ll Build**
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/wzcB8_xPdQs/0.jpg)](https://www.youtube.com/watch?v=wzcB8_xPdQs)
+This project involves:
+
+- **User Interaction**: A prompt-based interface where users can describe their desired diagram.
+- **Diagram Agent**: The agent will generate a Mermaid script from the prompt, convert it to an image, and return the output.
+- **Web Interface**: Built using Gradio for seamless user interaction.
+
+---
+
+This repository serves as a companion to the AI IN ACTION series and its second video tutorial **[Create Stunning Mermaid Diagrams with AI Agents (AI IN ACTION)](https://www.youtube.com/watch?v=D7r1PtkxNYg)** which introduces a Mermaid generation pipeline using smolagents from Hugging Face.
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/D7r1PtkxNYg/0.jpg)](https://www.youtube.com/watch?v=D7r1PtkxNYg)
 
 ---
 
 ## 🚀 AI in Action Series
 
 - [Part 1: Invoice Like a Boss! Let AI Agents Do The Boring Stuff (AI IN ACTION)](https://www.youtube.com/watch?v=wzcB8_xPdQs)
-- [Part 1: Create Stunning Mermaid Diagrams with AI Agents (AI IN ACTION)](https://youtu.be/D7r1PtkxNYg)
+- [Part 2: Create Stunning Mermaid Diagrams with AI Agents (AI IN ACTION)](https://youtu.be/D7r1PtkxNYg)
 
 ---
 
@@ -36,198 +41,169 @@ This repository is maintained by the team at **[AI Software Developers](https://
 
 ---
 
-## Prerequisites
+## **🛠️ Prerequisites**
 
-1. **Python 3.8+**
-2. Install the required libraries:
-   ```bash
-   pip install langgraph langchain_openai dotenv
-   ```
-3. Set up an OpenAI API key. Create a `.env` file with the following content:
-   ```
-   OPENAI_API_KEY=your_openai_api_key
-   ```
+### **1. System Requirements**
 
----
+- Python 3.8+
+- A valid Hugging Face API key (optional, depending on the models you use).
 
-## How LangChain Works
+### **2. Installation**
 
-LangChain is a framework designed to simplify the development of applications powered by large language models (LLMs). It allows developers to build tools and workflows by combining pre-built components such as:
+Install the required libraries:
 
-- **LLM Wrappers**: Integrations with APIs like OpenAI or Hugging Face.
-- **Chains**: Sequences of tasks that interact with the model.
-- **Memory**: Components for retaining conversational context.
-
-LangChain enables seamless interaction with language models for tasks like document generation, question answering, and decision-making.
-
-### LangChain Interaction Diagram
-
-Below is a conceptual diagram of how LangChain components interact:
-
-![LangChain Workflow](images/langchain_interaction_diagram.png)
-
----
-
-## Introduction to LangGraph
-
-LangGraph is a framework for creating applications using graph-based workflows. Each node represents a function or computational step, and edges define the flow between these nodes based on certain conditions.
-
-### Key Features of LangGraph
-
-- **State Management**: Maintain the context throughout the workflow.
-- **Flexible Routing**: Dynamically determine the next steps based on conditions.
-- **Persistence**: Store and retrieve workflow states easily.
-- **Visualization**: Generate visual representations of workflows for better debugging and understanding.
-
-### How Agents Work in General
-
-Agents are autonomous programs that perform tasks by:
-
-1. **Perceiving Inputs**: Receiving data or context from the environment.
-2. **Processing Data**: Applying logic, rules, or language models.
-3. **Acting**: Generating outputs, making decisions, or invoking tools.
-
-LangGraph agents use predefined tools and logic to dynamically process inputs and deliver actionable insights.
-
-### Tutorial: Invoice Analysis Pipeline - Data Extraction, Classification and Processing
-
-LangGraph can be used to create modular, extensible workflows for processing invoices and extracting key details. For example, an invoice classification and extraction pipeline could include the following stages:
-
-1. **Client Tier Classification**: Categorize clients based on the total invoice amount (e.g., Silver, Gold, or Platinum).
-2. **Entity Extraction**: Identify and extract key details such as client name, services provided, and payment terms from the invoice text.
-3. **Profitability Analysis**: Analyze the profitability by comparing the total amount due with the cost of services.
-4. **Summary Generation**: Generate a concise summary of the invoice details and profitability.
-
-This pipeline demonstrates how LangGraph can be leveraged to create workflows that are modular, easy to modify, and adaptable to various business needs.
-
-### LangGraph Pipeline Diagram
-
-Below is the LangGraph workflow for this invoice classification agent graph:
-
-![LangGraph Workflow](graph.png)
-
----
-
-## Usage
-
-### Example Invoice
-
-Here's a sample invoice text:
-
-```plaintext
-Invoice #12345
-Client: Acme Corp
-Services Provided: Consulting, Training, Support
-Total Amount Due: $286000
+```bash
+pip install smolagents gradio pillow
 ```
 
-### Running the Script
+---
 
-1. Add your invoice text and service costs into the script:
+## **📂 Project Setup**
 
-   ```python
-   example_invoice = """
-   Invoice #12345
-   Client: Acme Corp
-   Services Provided: Consulting, Training, Support
-   Total Amount Due: $250000
+### **1. Define the Prompt and Mermaid Script**
 
-   Services:
-    1. Web Development - $150,000
-    2. SEO Optimization - $50,000
-    3. Social Media Management - $30,000
-    4. Content Creation - $26,000
-    5. Email Marketing - $20,000
-    6. Graphic Design - $10,000
-    """
-   ```
+Here’s an example of a sequence diagram:
 
-2. Run the script:
+#### **User Prompt**
+
+"Create a sequence diagram for a login interaction."
+
+#### **Generated Mermaid Script**
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Server
+    User->>Browser: Enter credentials
+    Browser->>Server: Validate credentials
+    Server-->>Browser: Login successful
+    Browser-->>User: Display dashboard
+```
+
+### **2. Project Structure**
+
+Your project should include:
+
+- **`main.py`**: The main script to run the agent and Gradio app.
+- **`mermaid_agent.py`**: Contains the logic for generating Mermaid scripts and images.
+
+---
+
+## **👨‍💻 Implementation**
+
+### **1. Writing the Agent**
+
+The `DiagramAgent` will handle generating the Mermaid script and converting it to an image.
+
+#### **mermaid_agent.py**
+
+```python
+from smolagents import CodeAgent
+from PIL import Image, ImageDraw, ImageFont
+import os
+
+class DiagramAgent(CodeAgent):
+    def __init__(self, model, instructions):
+        super().__init__(model=model, instructions=instructions)
+
+    def generate_mermaid_script(self, prompt):
+        return self.run(prompt)
+
+    def render_mermaid_image(self, script, output_file):
+        # Placeholder for converting Mermaid script to an image
+        # Simulating an image creation
+        img = Image.new('RGB', (800, 600), color=(255, 255, 255))
+        draw = ImageDraw.Draw(img)
+        draw.text((10, 10), script, fill=(0, 0, 0))
+        img.save(output_file)
+```
+
+---
+
+### **2. Creating the Gradio Web Interface**
+
+#### **main.py**
+
+```python
+import gradio as gr
+from mermaid_agent import DiagramAgent
+
+# Initialize the DiagramAgent
+agent = DiagramAgent(
+    model="gpt-4-mini",
+    instructions="Generate a valid Mermaid.js script for the given prompt."
+)
+
+def process_prompt(prompt):
+    script = agent.generate_mermaid_script(prompt)
+    output_file = "diagram.png"
+    agent.render_mermaid_image(script, output_file)
+    return script, output_file
+
+# Gradio Interface
+iface = gr.Interface(
+    fn=process_prompt,
+    inputs="text",
+    outputs=["text", "image"],
+    title="Mermaid Diagram Generator",
+    description="Generate diagrams using Mermaid.js and smolagents!"
+)
+
+iface.launch()
+```
+
+---
+
+## **🌟 Usage**
+
+1. Run the script:
+
    ```bash
    python main.py
    ```
 
-### Expected Output
+2. Open the Gradio interface in your browser.
 
-After processing, you will see structured output like:
+3. Enter a prompt like:
 
-```plaintext
-Processed Invoice Data:
-{
-    'client': 'Acme Corp',
-    'services': ['Consulting', 'Training', 'Support'],
-    'total_amount': 286000.0,
-    'tier': 'Gold',
-    'profitability_summary': 'Client Acme Corp is classified as Gold tier. Total revenue: $286,000.00. Total cost: $100,000.00. Profit: $186,000.00.'
-}
-```
+   ```
+   Create a sequence diagram for a login interaction.
+   ```
+
+4. View the generated Mermaid script and corresponding image.
 
 ---
 
-## 🧑‍💻 Pipeline Overview
+## **📚 Additional Resources**
 
-The pipeline uses **LangGraph** tools to process invoices in five steps:
-
-1. **Classify Client Tier**: Categorizes clients into Silver, Gold, or Platinum.
-2. **Extract Entities**: Retrieves key data such as client name and services.
-3. **Extract Total Amount**: Extracts the total invoice amount.
-4. **Analyze Profitability**: Compares invoice revenue with service costs.
-5. **Generate Summary**: Produces a concise summary of the client's financial contribution.
+- GitHub Repo: [AI IN ACTION - Mermaid Diagram Generator](https://github.com/aidev9/tuts/tree/main/ai-in-action/2-diagram-generation-agents)
+- Gradio Documentation: [Gradio Guide](https://gradio.app)
+- smolagents Documentation: [smolagents Guide](https://huggingface.co/docs/smolagents)
 
 ---
 
-### Data Pipeline Sequence Diagram
+## **🔧 Extending the Project**
 
-Below is a conceptual pipeline diagram for invoice analysis and classification:
+Here are a few ways to enhance this project:
 
-```mermaid
-sequenceDiagram
-    participant MainScript as User
-    participant Graph as LangGraph
-    participant State as State
-    participant LLM as LLM
-
-    MainScript->>State: Initialize State with Invoice Text & Cost
-    MainScript->>Graph: Invoke Graph Workflow
-    Graph->>State: Start at classify_client
-    State->>LLM: Classify Client Tier
-    LLM-->>State: Return Classification
-    Graph->>State: Proceed to extract_entities
-    State->>LLM: Extract Entities (Client, Services, Payment Terms)
-    LLM-->>State: Return Entities
-    Graph->>State: Proceed to extract_invoice_amount
-    State->>LLM: Extract Total Amount Due
-    LLM-->>State: Return Amount
-    Graph->>State: Proceed to analyze_profitability
-    State->>State: Calculate Profitability
-    Graph->>State: Proceed to summarize
-    State->>LLM: Summarize Invoice Details
-    LLM-->>State: Return Summary
-    Graph-->>MainScript: Return Final State with Results
-```
+- **Support for Other Diagram Types**: Extend the agent to handle flowcharts, state diagrams, etc.
+- **Improved Rendering**: Use a tool like Mermaid CLI or Graphviz for more polished images.
+- **Error Handling**: Add validation for generated Mermaid scripts.
+- **Customization**: Allow users to choose colors, fonts, or layout styles for the diagrams.
 
 ---
 
-## ✅ Extending the Script
+## **📢 Conclusion**
 
-You can customize the pipeline for additional use cases:
-
-- Add new tools for advanced data extraction or calculations.
-- Modify client classification thresholds.
-- Integrate with external data sources like databases or APIs.
-
----
-
-## Conclusion
-
-This project demonstrates how LangGraph and AI-powered workflows can streamline complex processes like invoice processing, making them more efficient, accurate, and scalable. By leveraging modular tools for classification, extraction, and analysis, businesses can automate tedious tasks while gaining valuable insights into client profitability. Whether you're a developer exploring AI workflows or a business leader seeking actionable solutions, this pipeline provides a practical example of AI in action, ready to be adapted to various real-world scenarios.
+With smolagents and Mermaid.js, generating diagrams has never been easier. This tutorial showed how to build a simple yet powerful tool for converting text prompts into dynamic visualizations. Start experimenting today and discover the potential of AI-driven workflows!
 
 ---
 
 ## 🚀 AI in Action Series
 
 - [Part 1: Invoice Like a Boss! Let AI Agents Do The Boring Stuff (AI IN ACTION)](https://www.youtube.com/watch?v=wzcB8_xPdQs)
-- [Part 2: Create Stunning Mermaid Diagrams with AI Agents (AI IN ACTION)](https://youtu.be/D7r1PtkxNYg)
+- [Part 1: Create Stunning Mermaid Diagrams with AI Agents (AI IN ACTION)](https://youtu.be/D7r1PtkxNYg)
 
 ### **Series Structure**
 

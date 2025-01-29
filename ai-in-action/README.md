@@ -1,6 +1,7 @@
 ## 🚀 AI in Action Series
 
-- [Part 1: Invoice Analysis AI Agents with LangGraph (Coding Tutorial)](https://www.youtube.com/watch?v=XXXXX)
+- [Part 1: Invoice Like a Boss! Let AI Agents Do The Boring Stuff (AI IN ACTION)](https://www.youtube.com/watch?v=wzcB8_xPdQs)
+- [Part 2: Create Stunning Mermaid Diagrams with AI Agents (AI IN ACTION)](https://youtu.be/D7r1PtkxNYg)
 
 ### **Series Structure**
 
