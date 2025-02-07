@@ -46,7 +46,7 @@ def validate_result_hex(ctx: RunContext[str], result: BaseNumber) -> BaseNumber:
     print(Fore.MAGENTA, f"Evaluating HEX: {result.num_hex}")
     # Convert the hexadecimal number to decimal
     num_dec = int(result.num_hex, 16)
-    if (num_dec > 500):
+    if (num_dec > 5):
         print(Fore.RED, f"Validation failed: Number {result.num_hex} is too high. Try another number.")
         raise ModelRetry("Number is too high. Try another number.")
     return result

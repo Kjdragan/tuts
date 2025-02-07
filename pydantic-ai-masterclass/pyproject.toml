@@ -12,6 +12,6 @@ dependencies = [
     "html-to-markdown==1.1.0",
     "logfire>=3.2.0",
     "openai==1.58.1",
-    "pydantic-ai==0.0.15",
+    "pydantic-ai",
     "python-dotenv>=1.0.1",
 ]
