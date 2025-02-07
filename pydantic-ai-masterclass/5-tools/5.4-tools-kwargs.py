@@ -1,3 +1,4 @@
+
 import os
 from colorama import Fore
 import logfire
@@ -12,7 +13,7 @@ load_dotenv()
 logfire.configure()
 
 # Define the model
-model = OpenAIModel('gpt-4o-mini', api_key=os.getenv('OPENAI_API_KEY'))
+model = OpenAIModel('gpt-4o', api_key=os.getenv('OPENAI_API_KEY'))
 
 # Define the output model
 class CodeQuality(BaseModel):

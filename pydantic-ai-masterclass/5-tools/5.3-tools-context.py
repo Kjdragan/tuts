@@ -12,7 +12,7 @@ load_dotenv()
 logfire.configure()
 
 # Define the model
-model = OpenAIModel('gpt-4o-mini', api_key=os.getenv('OPENAI_API_KEY'))
+model = OpenAIModel('gpt-4o', api_key=os.getenv('OPENAI_API_KEY'))
 
 # Define the output model
 class Capital(BaseModel):
@@ -23,10 +23,10 @@ class Capital(BaseModel):
     comparison: str
 
 # Define the agent
-agent = Agent(model=model, result_type=Capital, system_prompt="You are an experienced historian and you are asked a question about the capital of a country. You are expected to provide the name of the capital city, the year it was founded, and a short history of the city. Compare the the city to the  city provided by the comparison tool. Always call the comparison tool to get the comparison city.")
+agent = Agent(model=model, result_type=Capital, system_prompt="You are an experienced historian and you are asked a question about the capital of a country. You are expected to provide the name of the capital city, the year it was founded, and a short history of the city. Compare the city to the city provided by the comparison tool. Always call the comparison tool to get the comparison city.")
 
 # Tool to get the comparison city
-@agent.tool(retries=2)
+@agent.tool
 def get_comparison_city(ctx: RunContext[str]) -> str:
     return f"The comparison city is {ctx.deps}"
 
@@ -38,3 +38,6 @@ print(Fore.RED, result.data.name)
 print(Fore.GREEN, result.data.year_founded)
 print(Fore.CYAN, result.data.short_history)
 print(Fore.YELLOW, result.data.comparison)
+
+
+print("the context city was {ctx.deps}")
